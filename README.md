@@ -37,6 +37,23 @@ pip install libsass
 python -c "import sass; open('styles/main.css','w',encoding='utf-8').write(sass.compile(filename='styles/main.scss', output_style='expanded'))"
 ```
 
+## Internetga joylash (PythonAnywhere, kartasiz)
+
+1. pythonanywhere.com da bepul (Beginner) hisob oching.
+2. **Consoles → Bash**:
+   ```bash
+   git clone https://github.com/gamingapg353-cloud/uzum-market.git
+   cd uzum-market && cp .env.example .env && nano .env   # qiymatlarni to'ldiring
+   ```
+3. **Web → Add a new web app → Manual configuration → Python 3.12**.
+4. **WSGI configuration file** ichini shu bilan almashtiring (LOGIN — sizning loginingiz):
+   ```python
+   import sys
+   sys.path.insert(0, "/home/LOGIN/uzum-market")
+   from wsgi import application
+   ```
+5. **Reload** — sayt `https://LOGIN.pythonanywhere.com` da ochiladi.
+
 C++ hisobot (server `data/orders.csv` ga yozadi):
 
 ```bash
