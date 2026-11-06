@@ -49,11 +49,14 @@ def load_env(path: str) -> None:
 
 
 load_env(os.path.join(ROOT, ".env"))
-DATA_DIR = os.path.join(ROOT, "data")
+DATA_DIR = os.environ.get("DATA_DIR") or os.path.join(ROOT, "data")
 DB_PATH = os.path.join(DATA_DIR, "db.json")
 CSV_PATH = os.path.join(DATA_DIR, "orders.csv")
 PORT = int(os.environ.get("PORT", "8000"))
-BASE_URL = os.environ.get("BASE_URL", f"http://localhost:{PORT}")
+# Render.com o'z manzilini RENDER_EXTERNAL_URL orqali beradi
+BASE_URL = (os.environ.get("BASE_URL") or os.environ.get("RENDER_EXTERNAL_URL")
+            or f"http://localhost:{PORT}").rstrip("/")
+HOST = os.environ.get("HOST", "127.0.0.1")  # hostingda 0.0.0.0
 
 OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "gamingapg353@gmail.com")
 OWNER_PASSWORD = os.environ.get("OWNER_PASSWORD", "")  # .env da saqlanadi, kodda emas
@@ -612,4 +615,4 @@ if __name__ == "__main__":
     bootstrap()
     print(f"Uzum Market ishga tushdi: {BASE_URL}")
     print(f"Egasi: {OWNER_EMAIL}")
-    ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()

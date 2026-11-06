@@ -1,0 +1,1 @@
+# server.py faqat Python standart kutubxonasidan foydalanadi — qo'shimcha paket kerak emas.
