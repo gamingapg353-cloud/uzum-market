@@ -1,19 +1,19 @@
-# Netlify faqat sahifalarni ko'rsatadi; server (server.py) Render.com'da ishlaydi.
-# /api va /auth so'rovlari Render'dagi serverga uzatiladi (foydalanuvchi faqat Netlify manzilini ko'radi).
-# Render'dagi manzil boshqacha chiqsa — quyidagi ikki qatordagi manzilni almashtiring.
+# Netlify faqat sahifalarni ko'rsatadi; server (server.py) PythonAnywhere'da ishlaydi.
+# /api va /auth so'rovlari PythonAnywhere'dagi serverga uzatiladi (foydalanuvchi faqat Netlify manzilini ko'radi).
+# PythonAnywhere manzili boshqacha chiqsa — quyidagi ikki qatordagi manzilni almashtiring.
 
 [build]
   publish = "."
 
 [[redirects]]
   from = "/api/*"
-  to = "https://uzum-market-samandar.onrender.com/api/:splat"
+  to = "https://uzummarket.pythonanywhere.com/api/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/auth/*"
-  to = "https://uzum-market-samandar.onrender.com/auth/:splat"
+  to = "https://uzummarket.pythonanywhere.com/auth/:splat"
   status = 200
   force = true
 
