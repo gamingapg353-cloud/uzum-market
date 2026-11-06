@@ -1,0 +1,31 @@
+# Netlify faqat sahifalarni ko'rsatadi; server (server.py) Render.com'da ishlaydi.
+# /api va /auth so'rovlari Render'dagi serverga uzatiladi (foydalanuvchi faqat Netlify manzilini ko'radi).
+# Render'dagi manzil boshqacha chiqsa — quyidagi ikki qatordagi manzilni almashtiring.
+
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://uzum-market-samandar.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/auth/*"
+  to = "https://uzum-market-samandar.onrender.com/auth/:splat"
+  status = 200
+  force = true
+
+# Server fayllari va maxfiy narsalar Netlify'da ochiq turmasin
+[[redirects]]
+  from = "/server.py"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/"
+  status = 404
+  force = true

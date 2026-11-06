@@ -12,6 +12,9 @@ services:
         value: 3.12.7
       - key: HOST
         value: 0.0.0.0
+      # Foydalanuvchilar saytni Netlify orqali ochadi — Google/GitHub ham shu manzilga qaytadi
+      - key: BASE_URL
+        value: https://uzum-market-uz.netlify.app
       - key: OWNER_EMAIL
         sync: false
       - key: OWNER_PASSWORD

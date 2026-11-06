@@ -34,7 +34,7 @@ async function api(path, opts = {}) {
     body: opts.body ? JSON.stringify(opts.body) : undefined,
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || "Xatolik yuz berdi");
+  if (!res.ok) throw Object.assign(new Error(data.error || "Xatolik yuz berdi"), { status: res.status });
   return data;
 }
 
@@ -67,19 +67,34 @@ function preloadImages(urls) {
   });
 }
 
-async function boot() {
-  const timeout = new Promise((r) => setTimeout(r, MAX_LOADER_MS));
-  const work = (async () => {
-    readHashToken();
+// Bepul hostingda server "uxlab" qoladi — uyg'onguncha (ko'pi bilan 90 s) qayta urinib turamiz.
+async function waitForServer() {
+  const start = Date.now();
+  for (;;) {
     try {
       state.products = (await api("products")).products;
+      return true;
     } catch {
-      $("#loaderText").textContent = "Server ishlamayapti — python server.py ni ishga tushiring";
-      await new Promise(() => {}); // timeout kutadi
+      const s = Math.round((Date.now() - start) / 1000);
+      if (s > 90) return false;
+      $("#loaderText").textContent = `Server uyg'onmoqda, biroz kuting... ${s} s`;
+      await new Promise((r) => setTimeout(r, 3000));
     }
+  }
+}
+
+async function boot() {
+  readHashToken();
+  if (!(await waitForServer())) {
+    $("#loaderText").textContent = "Server ishlamayapti — keyinroq urinib ko'ring (lokalda: python server.py)";
+    return;
+  }
+  // Rasmlar yuklanguncha kutamiz, lekin 10 soniyadan ko'p emas
+  const timeout = new Promise((r) => setTimeout(r, MAX_LOADER_MS));
+  const work = (async () => {
     await preloadImages([...new Set(state.products.map((p) => p.image))]);
     if (state.token) {
-      try { state.user = (await api("me")).user; } catch { setToken(""); }
+      try { state.user = (await api("me")).user; } catch (err) { if (err.status === 401) setToken(""); }
     }
   })();
   await Promise.race([work, timeout]);
