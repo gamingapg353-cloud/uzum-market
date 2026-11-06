@@ -1,0 +1,11 @@
+data/
+.env
+.claude/
+tools/report.exe
+tools/report
+__pycache__/
+*.pyc
+
+# maxfiy: Google kaliti va saqlangan sahifalar
+client_secret_*.json
+OAuth application settings*
