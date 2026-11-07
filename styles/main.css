@@ -1971,6 +1971,26 @@ textarea.input {
   font-size: 17px;
 }
 
+.footer .server-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #f6f6f9;
+  font-weight: 500;
+}
+
+.footer .server-status.ok {
+  background: #e2f8e8;
+  color: #137a37;
+}
+
+.footer .server-status.err {
+  background: #ffe8ee;
+  color: #e0144f;
+}
+
 .footer__bottom {
   margin-top: 36px;
   padding-top: 18px;

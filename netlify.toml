@@ -1,31 +1,35 @@
-# Netlify faqat sahifalarni ko'rsatadi; server (server.py) PythonAnywhere'da ishlaydi.
-# /api va /auth so'rovlari PythonAnywhere'dagi serverga uzatiladi (foydalanuvchi faqat Netlify manzilini ko'radi).
-# PythonAnywhere manzili boshqacha chiqsa — quyidagi ikki qatordagi manzilni almashtiring.
+# Netlify: sahifalar + server (Netlify Functions, TypeScript) — tashqi server kerak emas.
+# /api/* va /auth/* ni netlify/functions/api.mts bajaradi (ma'lumotlar Netlify Blobs'da).
+# Kalitlar: Site configuration -> Environment variables (OWNER_EMAIL, OWNER_PASSWORD, GOOGLE_*, GITHUB_*, SMTP_*).
 
 [build]
   publish = "."
 
-[[redirects]]
-  from = "/api/*"
-  to = "https://uzummarket.pythonanywhere.com/api/:splat"
-  status = 200
-  force = true
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
-[[redirects]]
-  from = "/auth/*"
-  to = "https://uzummarket.pythonanywhere.com/auth/:splat"
-  status = 200
-  force = true
-
-# Server fayllari va maxfiy narsalar Netlify'da ochiq turmasin
+# Kod va server fayllari brauzerda ochiq turmasin
 [[redirects]]
   from = "/server.py"
-  to = "/"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wsgi.py"
+  to = "/404"
   status = 404
   force = true
 
 [[redirects]]
   from = "/tools/*"
-  to = "/"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404"
   status = 404
   force = true
