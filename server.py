@@ -418,7 +418,7 @@ class Handler(SimpleHTTPRequestHandler):
             return 200, {"token": t, "user": public_user(user)}
 
         if p == ["products"] and method == "GET":
-            return 200, {"products": db["products"], "server": "Python"}
+            return 200, {"products": db["products"]}
 
         # quyidagilar uchun kirish shart
         if not me:
