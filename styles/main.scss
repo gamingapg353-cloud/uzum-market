@@ -493,6 +493,11 @@ textarea.input { resize: vertical; min-height: 96px; line-height: 1.5; }
   li > *, li { transition: color .2s; }
   li:hover { color: $brand; cursor: pointer; }
   &__socials { display: flex; gap: 8px; margin-top: 16px; span { @include flex-center; width: 38px; height: 38px; border-radius: 12px; background: $bg; font-size: 17px; } }
+  .server-status {
+    display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; background: $bg; font-weight: 500;
+    &.ok { background: #e2f8e8; color: #137a37; }
+    &.err { background: #ffe8ee; color: #e0144f; }
+  }
   &__bottom { margin-top: 36px; padding-top: 18px; border-top: 1px solid $line; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13px; }
 }
 

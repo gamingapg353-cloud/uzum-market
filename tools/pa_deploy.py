@@ -28,6 +28,17 @@ from wsgi import application  # noqa
 '''
 
 
+def token_from_env() -> str:
+    path = os.path.join(ROOT, ".env")
+    if os.path.exists(path):
+        for line in open(path, encoding="utf-8"):
+            if line.startswith("PA_API_TOKEN="):
+                t = line.split("=", 1)[1].strip().strip('"').strip("'")
+                if re.fullmatch(r"[0-9a-f]{40}", t):
+                    return t
+    return ""
+
+
 def token_from_clipboard() -> str:
     import tkinter
     r = tkinter.Tk()
@@ -76,14 +87,14 @@ def env_content() -> bytes:
     path = os.path.join(ROOT, ".env")
     if not os.path.exists(path):
         sys.exit("XATO: .env topilmadi")
-    lines = [l for l in open(path, encoding="utf-8").read().splitlines() if not l.startswith("BASE_URL=")]
+    lines = [l for l in open(path, encoding="utf-8").read().splitlines() if not l.startswith(("BASE_URL=", "PA_API_TOKEN="))]
     lines.append(f"BASE_URL={BASE_URL}")
     return ("\n".join(lines) + "\n").encode()
 
 
 def main():
     import urllib.parse  # noqa: F401  (api() ichida ishlatiladi)
-    token = token_from_clipboard()
+    token = token_from_env() or token_from_clipboard()
 
     code, _ = api(token, "GET", "webapps/")
     if code == 401 or code == 403:

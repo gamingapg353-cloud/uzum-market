@@ -57,6 +57,7 @@
     <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></symbol>
   </svg>
 
+
   <!-- 1. YUKLASH EKRANI -->
   <div id="loader" class="loader">
     <div class="loader__mark"><span></span><span></span><svg><use href="#logo" /></svg></div>
@@ -331,6 +332,7 @@
       </div>
       <div class="container-x footer__bottom">
         <span>© 2026 Uzum Market — o'quv loyiha</span>
+        <span id="serverStatus" class="server-status" title="HTML ↔ JS ↔ Python ulanishi">🐍 Python server: tekshirilmoqda...</span>
         <span>Samandar tomonidan yaratilgan 💜</span>
       </div>
     </footer>
@@ -361,10 +363,14 @@
 
   <div id="toast" class="toast"></div>
 
+  <!--
+    Fayllar qanday ulangan:
+      styles/main.scss  -> kompilyatsiya -> styles/main.css   (yuqorida <link> bilan ulangan)
+      src/utils.ts      -> kompilyatsiya -> js/utils.js       (app.js ichida import qilinadi)
+      js/app.js         -> fetch("/api/...") -> server.py     (Python server — internet so'rovi orqali)
+    Brauzer .py, .ts va .scss fayllarni to'g'ridan-to'g'ri o'qiy olmaydi, shuning uchun ular <script> bilan ulanmaydi.
+  -->
   <script type="module" src="./js/app.js"></script>
-  <script src="./js/utils.js"></script>
-  <script src="./src/utils.ts"></script>
-  <script src="./server.py"></script>
 </body>
 
 </html>

@@ -196,6 +196,22 @@ function showApp() {
   renderHero();
   setView("shop");
   setupJobMenu();
+  checkServer();
+}
+
+// Footer'dagi belgi: HTML -> JS -> Python server ulanishini haqiqiy so'rov bilan tekshiradi
+async function checkServer() {
+  const el = $("#serverStatus");
+  const t0 = performance.now();
+  try {
+    const { products } = await api("products");
+    const ms = Math.round(performance.now() - t0);
+    el.textContent = `🐍 Python server: ulangan ✅ (${products.length} mahsulot, ${ms} ms)`;
+    el.className = "server-status ok";
+  } catch {
+    el.textContent = "🐍 Python server: ulanmagan ❌";
+    el.className = "server-status err";
+  }
 }
 
 // Profil menyusi va rasmini o'zgartirish
